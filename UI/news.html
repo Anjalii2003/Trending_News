@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>News trending &amp; emerging events</title>
+<link rel="icon" href="data:,">
+<link rel="stylesheet" href="assets/dash.css">
+<link rel="stylesheet" href="assets/news.css">
+<link rel="stylesheet" href="assets/fortress.css">
+</head>
+<body>
+<header class="n-top">
+  <div class="n-top-in">
+    <div>
+      <h1>News trending &amp; emerging events</h1>
+      <div class="n-sub" id="n-sub">loading…</div>
+    </div>
+    <div class="n-grow"></div>
+    <a href="/" style="color:var(--ink-2);text-decoration:none;font-size:13px" title="Top trending stories for a country and/or topic">← Trending news</a>
+    <button type="button" id="n-theme" aria-label="Toggle light/dark theme">Theme</button>
+  </div>
+</header>
+
+<main class="n-main">
+  <section class="n-card" aria-labelledby="h-aoi">
+    <h2 id="h-aoi">Area of interest</h2>
+    <p class="n-lede">Metrics, baselines and alerts below are computed <b>inside</b> the selected area (its own history and exposure), not filtered from a global result.
+      <b>Event location</b> is where the reported event happened (GDELT ActionGeo). <b>Mentioned in</b> only means the area is named in the text.
+      Publisher location is shown separately and never used for the area.</p>
+    <div class="n-aoi">
+      <div>
+        <div class="n-field"><label>Location meaning</label>
+          <div class="n-seg" role="group" aria-label="Location meaning">
+            <button type="button" id="m-event" aria-pressed="true">Event location</button>
+            <button type="button" id="m-mention" aria-pressed="false">Mentioned in</button>
+          </div></div>
+        <div class="n-field"><label for="sel-country">Country</label><select id="sel-country"></select></div>
+        <div class="n-field"><label for="sel-adm1">State / region</label><select id="sel-adm1" disabled><option>All</option></select></div>
+        <div class="n-field"><label>Draw a custom area (event location)</label>
+          <div class="n-row">
+            <button type="button" id="d-poly">Polygon</button>
+            <button type="button" id="d-box">Box</button>
+            <button type="button" id="d-rad">Radius</button>
+            <input type="number" id="d-km" value="100" min="1" max="2000" aria-label="Radius in km" style="width:84px"> <span class="n-muted">km</span>
+          </div>
+          <div class="n-row" style="margin-top:6px">
+            <button type="button" id="d-finish" disabled>Finish polygon</button>
+            <button type="button" id="d-cancel" disabled>Cancel</button>
+            <label class="n-2"><input type="checkbox" id="d-country"> include country-level points</label>
+          </div></div>
+        <div class="n-muted" id="aoi-status" style="font-size:12px"></div>
+      </div>
+      <div>
+        <div class="n-map" id="map"><div class="n-spin">loading map…</div></div>
+        <div class="n-legend" id="map-legend"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="n-card" aria-labelledby="h-tax" id="tax-card">
+    <h2 id="h-tax">Topic filter</h2>
+    <p class="n-lede">Domain → Topic → Subtopic, from the stored taxonomy. The filter applies to the events, trending topics, alerts and articles below, together with the area chosen above.
+      Matching uses each article’s stored taxonomy label — never its headline text.</p>
+    <div class="n-row" id="tx-row">
+      <button type="button" id="tx-all" aria-pressed="true">All Topics</button>
+      <label class="n-2">Domain <select id="tx-domain" aria-label="Domain"></select></label>
+      <label class="n-2">Topic <select id="tx-topic" aria-label="Topic" disabled></select></label>
+      <label class="n-2">Subtopic <select id="tx-sub" aria-label="Subtopic" disabled></select></label>
+    </div>
+    <div id="tx-crumb" class="n-crumb" aria-live="polite"></div>
+  </section>
+
+  <section class="n-card" aria-labelledby="h-cov"><h2 id="h-cov">Coverage &amp; data quality for this area</h2><div id="cov"></div></section>
+  <section class="n-card" aria-labelledby="h-kpi"><h2 id="h-kpi">Summary</h2><div id="kpis" class="n-kpis"></div></section>
+  <section class="n-card" aria-labelledby="h-ev"><h2 id="h-ev">Events in this area</h2>
+    <p class="n-lede">Articles about the same event, grouped by meaning (existing embeddings) within a time window. An event needs ≥3 articles from ≥2 publishers.
+      “Emerging” = unusually wide pickup versus this area’s own recent events of the same age (FDR-controlled). Click a row for supporting articles.</p>
+    <div id="ev-filters" class="n-filters"></div><div id="events"></div></section>
+  <section class="n-card" aria-labelledby="h-nodes"><h2 id="h-nodes">Trending topics in this area</h2>
+    <p class="n-lede">Taxonomy nodes tested against this area’s own baseline. “—” means below the minimum evidence (shown, never replaced by zero).</p>
+    <div class="n-row" style="margin-bottom:8px"><div class="n-seg" role="group" aria-label="Taxonomy level">
+      <button type="button" id="lv-topic" aria-pressed="true">Topic</button><button type="button" id="lv-category" aria-pressed="false">Category</button><button type="button" id="lv-subtopic" aria-pressed="false" title="computed on demand for this view">Subtopic</button></div></div>
+    <div id="nodes"></div><div id="node-chart" style="margin-top:12px"></div></section>
+  <section class="n-card" aria-labelledby="h-al"><h2 id="h-al">Alerts</h2>
+    <p class="n-lede">Each alert passed minimum support, an effect-size floor and Benjamini–Hochberg FDR control (q &lt; 0.05). Alerts revised by late data are kept and marked retracted.</p>
+    <div class="n-row" style="margin-bottom:6px" id="al-filters"></div><div id="alerts"></div></section>
+  <section class="n-card" aria-labelledby="h-art"><h2 id="h-art">News articles in this view</h2>
+    <p class="n-lede">The articles behind the numbers above — title, publisher, publication date (UTC) and a link to the original source. Newest first; follows the area and the topic filter.</p>
+    <div id="articles"></div></section>
+  <section class="n-card" aria-labelledby="h-me"><h2 id="h-me">Methodology, limits &amp; unsupported metrics</h2><div id="method"></div></section>
+</main>
+
+<div id="n-backdrop"></div>
+<aside id="n-drawer" aria-hidden="true" role="dialog" aria-label="Event details">
+  <div class="n-row"><b id="dr-title" style="font-size:15px"></b><span class="n-grow"></span><button type="button" id="dr-close" aria-label="Close">Close ✕</button></div>
+  <div id="dr-body"></div>
+</aside>
+<script src="assets/news.js"></script>
+</body>
+</html>

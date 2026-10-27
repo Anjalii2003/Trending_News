@@ -1,0 +1,238 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="3600" height="2520" viewBox="0 0 3600 2520">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#071426"/>
+      <stop offset="1" stop-color="#101c32"/>
+    </linearGradient>
+    <linearGradient id="head" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#142b48"/>
+      <stop offset="1" stop-color="#17223b"/>
+    </linearGradient>
+    <marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto">
+      <path d="M1,1 L11,6 L1,11 Z" fill="#72a9d9"/>
+    </marker>
+    <marker id="arrowGreen" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto">
+      <path d="M1,1 L11,6 L1,11 Z" fill="#61d6b3"/>
+    </marker>
+    <style>
+      text { font-family: Inter, "Segoe UI", Arial, sans-serif; fill: #edf4ff; }
+      .title { font-size: 58px; font-weight: 750; letter-spacing: 1.4px; }
+      .subtitle { font-size: 26px; fill: #b4c6dc; }
+      .section { font-size: 31px; font-weight: 750; letter-spacing: .7px; }
+      .label { font-size: 22px; font-weight: 700; letter-spacing: .4px; }
+      .body { font-size: 20px; fill: #d5e1ef; }
+      .small { font-size: 18px; fill: #bfd0e2; }
+      .tiny { font-size: 16px; fill: #b6c8dc; }
+      .muted { fill: #9fb2c8; }
+      .green { fill: #77e0be; }
+      .blue { fill: #83c4ff; }
+      .gold { fill: #ffd17b; }
+      .red { fill: #ff9b9b; }
+      .purple { fill: #d4b5ff; }
+      .panel { fill: #111f34; stroke: #304661; stroke-width: 2; }
+      .card { fill: #172941; stroke: #38536f; stroke-width: 2; }
+      .source { fill: #172b42; stroke: #4e789a; stroke-width: 2; }
+      .metric { fill: #132b34; stroke: #398a78; stroke-width: 2; }
+      .geo { fill: #25223d; stroke: #786ab0; stroke-width: 2; }
+      .news { fill: #302817; stroke: #aa8550; stroke-width: 2; }
+      .output { fill: #132c32; stroke: #4f9a8b; stroke-width: 2; }
+      .line { fill: none; stroke: #72a9d9; stroke-width: 5; marker-end: url(#arrow); }
+      .lineGreen { fill: none; stroke: #61d6b3; stroke-width: 5; marker-end: url(#arrowGreen); }
+      .dash { stroke-dasharray: 10 10; }
+    </style>
+  </defs>
+
+  <rect width="3600" height="2520" fill="url(#bg)"/>
+  <rect x="0" y="0" width="3600" height="180" fill="url(#head)"/>
+  <text x="70" y="78" class="title">METRICSCRITIQUE</text>
+  <text x="72" y="128" class="subtitle">End-to-end architecture | two read-only data pipelines | statistical signal -&gt; alerts -&gt; dashboards / delivery</text>
+  <rect x="2860" y="45" width="660" height="70" rx="20" fill="#203b50" stroke="#477b8b" stroke-width="2"/>
+  <text x="3190" y="90" class="label green" text-anchor="middle">ARCHITECTURE + METRIC DEFINITIONS</text>
+
+  <rect x="60" y="205" width="3480" height="104" rx="18" fill="#16293b" stroke="#38536f" stroke-width="2"/>
+  <text x="88" y="246" class="label gold">GLOBAL INVARIANTS</text>
+  <text x="88" y="281" class="small">Sources are read-only</text>
+  <text x="525" y="281" class="small">Derived data stays local</text>
+  <text x="1015" y="281" class="small">DuckDB: one writer at a time</text>
+  <text x="1595" y="281" class="small">Credentials from environment only</text>
+  <text x="2320" y="281" class="small">News backfill requires explicit approval</text>
+  <text x="3180" y="281" class="small red">Hate score uncalibrated</text>
+
+  <!-- SOCIAL PIPELINE -->
+  <rect x="60" y="340" width="2240" height="1135" rx="24" class="panel"/>
+  <text x="95" y="395" class="section blue">A | SOCIAL-MEDIA OSINT METRICS PIPELINE</text>
+  <text x="95" y="432" class="small">Production corpus -&gt; foundational tables -&gt; parallel metric and geopolitical enrichment products</text>
+
+  <rect x="95" y="485" width="390" height="300" rx="18" class="source"/>
+  <text x="125" y="530" class="label blue">1  SOURCE CORPUS</text>
+  <text x="125" y="574" class="body">PostgreSQL: shaktidb_social</text>
+  <text x="125" y="612" class="small">Scraped posts across 8 platforms</text>
+  <text x="125" y="646" class="small">Telegram | LinkedIn | YouTube</text>
+  <text x="125" y="678" class="small">Reddit | Facebook | Instagram</text>
+  <text x="125" y="710" class="small">Snapchat | Pinterest</text>
+  <text x="125" y="753" class="tiny gold">READ-ONLY snapshot | SELECT | ROLLBACK</text>
+
+  <path d="M485 632 H540" class="line"/>
+  <rect x="550" y="485" width="490" height="300" rx="18" class="card"/>
+  <text x="580" y="530" class="label">2  FOUNDATION | SCRIPTS 01-04</text>
+  <text x="580" y="576" class="body">01 Extract &amp; deduplicate</text>
+  <text x="600" y="609" class="small">post / comment facts, embeddings, engagement snapshots</text>
+  <text x="580" y="651" class="body">02 Readiness diagnostics | effort baselines</text>
+  <text x="580" y="692" class="body">04 NLP scores | tone, hate, readability, language</text>
+  <text x="580" y="733" class="small">Parquet + analytics.duckdb | append-only snapshots</text>
+  <text x="580" y="765" class="tiny muted">03 ontology v1 and 05-06 metrics are legacy / forensics only</text>
+
+  <path d="M1040 600 H1090" class="line"/>
+  <path d="M1040 700 C1070 700 1060 1130 1090 1130" class="line"/>
+
+  <rect x="1100" y="475" width="505" height="445" rx="18" class="metric"/>
+  <text x="1130" y="520" class="label green">3A  AUTHORITATIVE METRICS v2</text>
+  <text x="1130" y="565" class="body">07 Build -&gt; staged Parquet</text>
+  <text x="1130" y="601" class="body">08 Publish -&gt; metrics.duckdb</text>
+  <text x="1130" y="647" class="small">Grains: topic x platform x day;</text>
+  <text x="1130" y="676" class="small">topic x day; hashtag x platform x day</text>
+  <text x="1130" y="720" class="small">Metrics: growth, acceleration, NB surprise,</text>
+  <text x="1130" y="749" class="small">bursts, novelty, persistence, tone, virality,</text>
+  <text x="1130" y="778" class="small">diversity, readability, reach proxy</text>
+  <text x="1130" y="829" class="tiny green">Shared stats_v2.py | metric_meta documents formulas</text>
+  <text x="1130" y="865" class="tiny">08 writes authoritative v2; independent statistical review</text>
+  <text x="1130" y="895" class="tiny muted">analytics.duckdb v1 metrics are not decision inputs</text>
+
+  <rect x="1100" y="950" width="505" height="445" rx="18" class="geo"/>
+  <text x="1130" y="995" class="label purple">3B  GEO-ONTOLOGY | PARALLEL ENRICHMENT</text>
+  <text x="1130" y="1040" class="body">15 Hierarchical topic clustering (GPU)</text>
+  <text x="1130" y="1075" class="small">post_topic_v3 | topic_dim_v3</text>
+  <text x="1130" y="1117" class="body">10 Multilingual entity extraction</text>
+  <text x="1130" y="1152" class="small">13 subtype resolution | entity dimensions</text>
+  <text x="1130" y="1194" class="body">12 Risk / theme: bi-encoder -&gt; NLI</text>
+  <text x="1130" y="1229" class="body">14 CAMEO: theme + action codes</text>
+  <text x="1130" y="1271" class="body">11 Entity / risk / theme timeline metrics</text>
+  <text x="1130" y="1311" class="small">-&gt; geo_ontology.duckdb | geo alert candidates</text>
+  <text x="1130" y="1364" class="tiny purple">Math may be sound while labels remain partial / uncertain</text>
+
+  <path d="M1605 675 H1640" class="lineGreen"/>
+  <path d="M1605 1170 C1625 1170 1615 880 1640 880" class="lineGreen"/>
+  <rect x="1650" y="485" width="600" height="910" rx="18" class="output"/>
+  <text x="1680" y="530" class="label green">4  SNAPSHOT, SERVING &amp; DELIVERY</text>
+  <text x="1680" y="585" class="body">UI/build_dashboard.py</text>
+  <text x="1700" y="619" class="small">metrics.duckdb + geo_ontology.duckdb</text>
+  <text x="1700" y="649" class="small">-&gt; UI/data/metrics.json + geo_alerts.json</text>
+  <text x="1680" y="701" class="body">Browser dashboard | UI/index.html</text>
+  <text x="1700" y="735" class="small">dash.js filters / charts render snapshot data</text>
+  <text x="1700" y="765" class="small">Numbers refresh only after snapshot rebuild</text>
+  <text x="1680" y="817" class="body">UI/api_server.py</text>
+  <text x="1700" y="851" class="small">Static serving + bounded read-only /api/drill</text>
+  <text x="1680" y="903" class="body">notify_poller.py</text>
+  <text x="1700" y="937" class="small">Reads geo alerts; log-only, no channel connected</text>
+  <text x="1680" y="989" class="body">delivery/ingest.py</text>
+  <text x="1700" y="1023" class="small">Copies both DuckDB stores to delivery Postgres</text>
+  <text x="1700" y="1053" class="small">with manifest + per-table verdict / caveats</text>
+  <rect x="1680" y="1100" width="535" height="230" rx="14" fill="#10252b" stroke="#397f71" stroke-width="2"/>
+  <text x="1705" y="1143" class="label green">ALERT KEYING &amp; SAFETY</text>
+  <text x="1705" y="1183" class="small">Social alerts: topic_id x platform x day</text>
+  <text x="1705" y="1215" class="small">Geo alerts: dimension type x key x day</text>
+  <text x="1705" y="1247" class="small">Topic IDs preferred; hashtags cover only ~25%</text>
+  <text x="1705" y="1288" class="tiny gold">Reach is a proxy; hate prevalence is not publishable</text>
+
+  <!-- METRICS REFERENCE -->
+  <rect x="2340" y="340" width="1200" height="1135" rx="24" class="panel"/>
+  <text x="2375" y="395" class="section green">METRICS | WHAT THEY MEAN</text>
+  <text x="2375" y="432" class="small">Documented definitions and gates (not every value is guaranteed non-null)</text>
+
+  <rect x="2375" y="475" width="1130" height="285" rx="18" class="metric"/>
+  <text x="2410" y="520" class="label green">RATE, CHANGE &amp; INTENSITY</text>
+  <text x="2410" y="565" class="body">Effort-normalised rate: V_rate = V / effort</text>
+  <text x="2410" y="600" class="small">Effort = active channels / keywords; model uses log-exposure offset.</text>
+  <text x="2410" y="642" class="body">Growth: change in log rate | acceleration: second difference</text>
+  <text x="2410" y="677" class="small">Publishable acceleration uses causal Savitzky-Golay smoothing</text>
+  <text x="2410" y="719" class="body">Intensity: negative-binomial baseline surprise -&gt; p-value -&gt; BH q</text>
+  <text x="2410" y="748" class="small">Support: baseline &gt;=14 days; baseline mean &gt;=0.5; observed V &gt;=3 for z-like tests</text>
+
+  <rect x="2375" y="785" width="550" height="270" rx="18" class="card"/>
+  <text x="2410" y="830" class="label blue">TEMPORAL / EMERGENCE</text>
+  <text x="2410" y="875" class="small">Burst: Kleinberg state; start / peak / end</text>
+  <text x="2410" y="911" class="small">Novelty: cosine distance to trailing topic centroid</text>
+  <text x="2410" y="947" class="small">Persistence: AR(1) phi; half-life = ln(0.5)/ln(phi)</text>
+  <text x="2410" y="983" class="small">Emergence combines rank of surprise, smoothed</text>
+  <text x="2410" y="1012" class="small">acceleration, novelty and inverse days-to-threshold</text>
+
+  <rect x="2950" y="785" width="555" height="270" rx="18" class="card"/>
+  <text x="2985" y="830" class="label blue">ENGAGEMENT / LABELS</text>
+  <text x="2985" y="875" class="small">Tone: empirical-Bayes shrinkage to parent mean</text>
+  <text x="2985" y="911" class="small">Virality: platform x age-band percentile</text>
+  <text x="2985" y="947" class="small">Reach: proxy only (no follower counts)</text>
+  <text x="2985" y="983" class="small">Risk/theme NLI decision threshold: 0.22</text>
+  <text x="2985" y="1019" class="small">Hate score is uncalibrated; do not report prevalence</text>
+
+  <rect x="2375" y="1080" width="1130" height="320" rx="18" fill="#261f25" stroke="#8b5962" stroke-width="2"/>
+  <text x="2410" y="1127" class="label gold">GATES, NULLS &amp; QUALITY LABELS</text>
+  <text x="2410" y="1172" class="body">Alert threshold: Benjamini-Hochberg FDR q &lt; 0.05</text>
+  <text x="2410" y="1210" class="small">Insufficient support -&gt; NULL (not zero / invented value), retain support counts.</text>
+  <text x="2410" y="1251" class="small">Trend metrics use the collection window; scrape-time fallback is explicitly flagged.</text>
+  <text x="2410" y="1292" class="small">Metrics v2: documented SOUND; topic / entity / risk labels have separate caveats.</text>
+  <text x="2410" y="1333" class="small">Hashtag data is incomplete (~25% coverage): do not make it the sole alert key.</text>
+  <text x="2410" y="1373" class="tiny red">Keep uncertainty visible: model output is not automatically a validated finding.</text>
+
+  <!-- NEWS PIPELINE -->
+  <rect x="60" y="1510" width="3480" height="760" rx="24" class="panel"/>
+  <text x="95" y="1565" class="section gold">B | ADDITIVE NEWS TRENDING &amp; EMERGING-EVENTS ENGINE</text>
+  <text x="95" y="1602" class="small">Separate article pipeline; reuses the statistical core but does not replace or alter the social-media pipeline</text>
+
+  <rect x="95" y="1650" width="410" height="300" rx="18" class="source"/>
+  <text x="125" y="1695" class="label blue">1  READ-ONLY SOURCES</text>
+  <text x="125" y="1741" class="body">shaktidb_news | PostgreSQL</text>
+  <text x="125" y="1777" class="body">full-articles | OpenSearch</text>
+  <text x="125" y="1821" class="small">published_at is the date authority</text>
+  <text x="125" y="1855" class="small">Unusable dates excluded + counted</text>
+  <text x="125" y="1905" class="tiny gold">No write path to source systems</text>
+
+  <path d="M505 1800 H555" class="line"/>
+  <rect x="565" y="1650" width="525" height="300" rx="18" class="news"/>
+  <text x="595" y="1695" class="label gold">2  DISCOVER &amp; INGEST | 20-22</text>
+  <text x="595" y="1740" class="body">20 orchestrates pilot / range / backfill /</text>
+  <text x="595" y="1774" class="body">incremental / status / plan</text>
+  <text x="595" y="1818" class="small">21 geographic reference data | 22 publisher registry</text>
+  <text x="595" y="1855" class="small">Date checks | label join | hash dedupe | geo</text>
+  <text x="595" y="1889" class="small">Per-day atomic commits; watermark supports updates</text>
+  <text x="595" y="1923" class="tiny red">Historical backfill gated by explicit approval</text>
+
+  <path d="M1090 1800 H1140" class="line"/>
+  <rect x="1150" y="1650" width="565" height="300" rx="18" class="news"/>
+  <text x="1180" y="1695" class="label gold">3  RESOLVE &amp; CLUSTER</text>
+  <text x="1180" y="1740" class="body">Attach late-arriving labels</text>
+  <text x="1180" y="1782" class="body">Online centroid event clustering</text>
+  <text x="1180" y="1820" class="small">Cosine similarity &gt;=0.80 | max 72-hour gap</text>
+  <text x="1180" y="1857" class="small">Story event: &gt;=3 articles from &gt;=2 publishers</text>
+  <text x="1180" y="1905" class="tiny">Deterministic event IDs | derived data in news DuckDB</text>
+
+  <path d="M1715 1800 H1765" class="line"/>
+  <rect x="1775" y="1650" width="810" height="300" rx="18" class="news"/>
+  <text x="1805" y="1695" class="label gold">4  AOI METRICS &amp; ALERT TESTS</text>
+  <text x="1805" y="1740" class="body">AOI-specific negative-binomial baseline + leave-one-out exposure</text>
+  <text x="1805" y="1779" class="small">Drift + support gates | BH-FDR per AOI/day | causal acceleration</text>
+  <text x="1805" y="1815" class="small">Kleinberg/CUSUM bursts | AR(1) persistence | publisher diversity</text>
+  <text x="1805" y="1855" class="body">Emerging-event publisher-tail test; NULL under 50 reference clusters</text>
+  <text x="1805" y="1895" class="small">Location alerts only if &gt;=3 located articles and &gt;=80% agree</text>
+  <text x="1805" y="1927" class="tiny">AOIs: country / admin-1 / polygon / box / radius; event vs mentioned-in kept distinct</text>
+
+  <path d="M2585 1800 H2635" class="lineGreen"/>
+  <rect x="2645" y="1650" width="850" height="300" rx="18" class="output"/>
+  <text x="2675" y="1695" class="label green">5  NEWS PRODUCTS &amp; REVIEW</text>
+  <text x="2675" y="1740" class="body">news_*.duckdb -&gt; trending + event + alert datasets</text>
+  <text x="2675" y="1780" class="body">Top trending UI + advanced news dashboard</text>
+  <text x="2675" y="1820" class="small">UI/news_server.py serves news pages and read-only queries</text>
+  <text x="2675" y="1860" class="small">23 pilot report / validation; inspect evidence before action</text>
+  <text x="2675" y="1905" class="tiny gold">14-day pilot validated; no historical backfill run (per runbook)</text>
+
+  <rect x="95" y="1990" width="3400" height="225" rx="18" fill="#1c2434" stroke="#53657d" stroke-width="2"/>
+  <text x="130" y="2037" class="label purple">NEWS LOCATION &amp; INTERPRETATION GUARDRAILS</text>
+  <text x="130" y="2080" class="small">Event location (GDELT ActionGeo), mentioned-in location and publisher location are separate fields - never merge them.</text>
+  <text x="130" y="2117" class="small">Only ~35-40% of articles have machine-extracted event location; cluster quality is not human-validated.</text>
+  <text x="130" y="2154" class="small">Pilot uses limited baseline history; production baseline should be longer. Review location and new-development alerts.</text>
+  <text x="130" y="2192" class="tiny muted">Social pipeline: source -&gt; foundation -&gt; metrics / geo ontology -&gt; snapshot dashboard / read-only drilldown / delivery. News pipeline: source -&gt; ingest -&gt; events -&gt; AOI metrics -&gt; news dashboards.</text>
+
+  <text x="70" y="2348" class="tiny muted">PROJECT MAP: scripts/01-15 = social; scripts/20-23 = news; scripts/lib = shared config, data access, DuckDB, taxonomies, statistical primitives; UI/ = dashboards; delivery/ = downstream copy.</text>
+  <text x="70" y="2384" class="tiny muted">Diagram reflects repository documentation. Legacy / superseded stages are identified; thresholds and validation caveats are shown where documented.</text>
+  <rect x="3160" y="2322" width="380" height="82" rx="18" fill="#1b3748" stroke="#477b8b" stroke-width="2"/>
+  <text x="3350" y="2375" class="label green" text-anchor="middle">READ-ONLY BY DESIGN</text>
+</svg>

@@ -1,0 +1,10 @@
+# Runtime dependencies of the News Engine service + dashboard (pinned to the versions the test-suite ran on).
+numpy==2.5.4
+pandas==3.0.6
+scipy==1.18.1
+shapely==2.2.0
+requests==2.34.2
+python-dotenv==1.2.4
+psycopg2-binary==2.9.13
+pytz==2026.5
+tzdata

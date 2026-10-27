@@ -1,0 +1,121 @@
+/* ==========================================================================
+   Fortress theme for the News pages (Trending + advanced dashboard).
+   STYLING ONLY: dark navy surfaces, blue highlights, subtle borders, compact panels. It re-points the colour tokens the
+   existing stylesheets already use (the "gold" chrome ramp becomes blue), so layout, behaviour and every metric are untouched.
+   Loaded last. The light theme (toggle) gets a matching cool-blue variant.
+   Palette: navy #0b1120 / panel #0f172a / raised #131d33 / hairline #1e2a44 / blue #3b82f6 (accent text #60a5fa).
+   ========================================================================== */
+:root {
+  --bg: #0b1120;
+  --surface: #0f172a;
+  --elev: #131d33;
+  --sunken: #0a0f1d;
+
+  --gold: #60a5fa;                       /* accent text (links, rank numbers, headings) */
+  --gold-border: #3b82f6;
+  --gold-hair: #1e2a44;                  /* card/field hairlines: deliberately subtle */
+  --gold-wash: rgba(59, 130, 246, 0.14);
+
+  --ink: #e5ebf5;
+  --ink-2: #9aa8c0;
+  --ink-3: #6b7a95;
+
+  --mark-focal: #3b82f6;
+  --mark-focal-soft: rgba(59, 130, 246, 0.18);
+  --mark-context: #64748b;
+  --mark-context-soft: rgba(100, 116, 139, 0.2);
+  --mark-neg: #e5736b;
+  --grid: #1c2740;
+  --axis: #2c3a58;
+
+  --status-crit: #ef5350;
+  --status-high: #f5a524;
+  --status-med: #94a3b8;
+
+  --seq-0: #0f1b33; --seq-1: #13264a; --seq-2: #183763; --seq-3: #1f4b86; --seq-4: #2a63b3; --seq-5: #3b82f6; --seq-6: #9cc4fb;
+  --div-n3: #f4877d; --div-n2: #e0675c; --div-n1: #c0524a; --div-0: #475569; --div-p1: #2f6bbf; --div-p2: #3b82f6; --div-p3: #7db3fb;
+
+  --radius: 6px;
+  --hair: 1px;
+  --sans: Inter, system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+
+:root[data-theme="light"] {
+  --bg: #eef2f8;
+  --surface: #ffffff;
+  --elev: #f4f7fc;
+  --sunken: #eaf0f8;
+
+  --gold: #1d4ed8;
+  --gold-border: #2563eb;
+  --gold-hair: #d3dcec;
+  --gold-wash: rgba(37, 99, 235, 0.09);
+
+  --ink: #0f172a;
+  --ink-2: #475569;
+  --ink-3: #6b7a95;
+
+  --mark-focal: #2563eb;
+  --mark-focal-soft: rgba(37, 99, 235, 0.14);
+  --mark-context: #64748b;
+  --mark-context-soft: rgba(100, 116, 139, 0.16);
+  --mark-neg: #c2410c;
+  --grid: #dde5f2;
+  --axis: #b6c3da;
+
+  --status-crit: #c62828;
+  --status-high: #b45309;
+  --status-med: #64748b;
+
+  --seq-0: #eaf1fd; --seq-1: #cfe0fb; --seq-2: #a9c7f8; --seq-3: #78a6f2; --seq-4: #4a80e6; --seq-5: #2a5fcb; --seq-6: #173f94;
+  --div-n3: #9a3412; --div-n2: #c2410c; --div-n1: #ea7a4a; --div-0: #b6c3da; --div-p1: #7ea6ee; --div-p2: #2563eb; --div-p3: #173f94;
+}
+
+/* ---- compact panels, subtle borders ------------------------------------------------------------------------------- */
+html, body { font-size: 13.5px; }
+.n-top { background: var(--surface); border-bottom: var(--hair) solid var(--gold-hair); box-shadow: inset 0 -2px 0 rgba(59, 130, 246, .35); }
+.n-top-in { padding: 10px 16px; }
+.n-top h1 { font-size: 16px; letter-spacing: .02em; }
+.n-main { padding: 12px 16px; gap: 12px; }
+.n-card { padding: 11px 14px; border-radius: var(--radius); }
+.n-card > h2 { font-size: 11.5px; letter-spacing: .08em; color: var(--gold); }
+.t-card { padding: 11px 14px; gap: 3px 12px; }
+.t-card:hover { border-color: var(--gold-border); background: var(--elev); }
+.t-list { gap: 8px; }
+.t-rank { font-size: 22px; }
+.t-title { font-size: 15.5px; }
+.t-chip { background: var(--sunken); border-color: var(--gold-hair); }
+.t-chip.loc { border-color: var(--gold-border); color: var(--ink); }
+.t-bar i { background: linear-gradient(90deg, #2563eb, #60a5fa); }
+.t-note { border-left-color: var(--gold-border); }
+.t-link:hover, button:hover:not(:disabled) { border-color: var(--gold-border); }
+button[aria-pressed="true"], button.on { background: var(--gold-wash); border-color: var(--gold-border); color: var(--gold); }
+button, select, input { border-color: var(--gold-hair); background: var(--elev); }
+:focus-visible { outline-color: var(--gold-border); }
+.n-kpi { background: var(--elev); }
+.n-map path.sel, .n-map path:hover { stroke: var(--gold-border); }
+
+/* ---- Live processing panel (Trending page) ------------------------------------------------------------------------ */
+.live { padding: 10px 14px 12px; }
+.live-head { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 8px; }
+.live-head h2 { margin: 0; }
+.live-asof { font-size: 11.5px; }
+.live-pill { font-size: 11.5px; font-weight: 600; letter-spacing: .04em; text-transform: uppercase; padding: 2px 9px; border-radius: 999px;
+  border: var(--hair) solid var(--gold-hair); color: var(--ink-2); background: var(--sunken); }
+.live-pill::before { content: ""; display: inline-block; width: 7px; height: 7px; border-radius: 50%; margin-right: 6px; background: var(--ink-3); vertical-align: 0; }
+.live-pill.successful { color: #4ade80; border-color: rgba(74, 222, 128, .45); }
+.live-pill.successful::before { background: #4ade80; }
+.live-pill.running { color: var(--gold); border-color: var(--gold-border); }
+.live-pill.running::before { background: var(--gold-border); animation: livepulse 1.4s ease-in-out infinite; }
+.live-pill.failed { color: var(--status-crit); border-color: rgba(239, 83, 80, .5); }
+.live-pill.failed::before { background: var(--status-crit); }
+:root[data-theme="light"] .live-pill.successful { color: #15803d; border-color: rgba(21, 128, 61, .45); }
+:root[data-theme="light"] .live-pill.successful::before { background: #15803d; }
+@keyframes livepulse { 50% { opacity: .25; } }
+@media (prefers-reduced-motion: reduce) { .live-pill.running::before { animation: none; } }
+.live-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(168px, 1fr)); gap: 8px; }
+.live-cell { background: var(--elev); border: var(--hair) solid var(--gold-hair); border-radius: var(--radius); padding: 7px 10px; min-width: 0; }
+.live-k { display: block; font-size: 10.5px; color: var(--ink-2); text-transform: uppercase; letter-spacing: .06em; }
+.live-v { display: block; font-size: 16px; font-weight: 600; font-variant-numeric: tabular-nums; margin-top: 1px; overflow-wrap: anywhere; }
+.live-s { display: block; font-size: 11px; color: var(--ink-3); margin-top: 1px; overflow-wrap: anywhere; }
+.live-note { margin-top: 8px; font-size: 12px; color: var(--ink-2); border-left: 3px solid var(--status-high); padding: 3px 9px; background: var(--sunken); }

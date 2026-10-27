@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Trending news</title>
+<link rel="icon" href="data:,">
+<link rel="stylesheet" href="assets/dash.css">
+<link rel="stylesheet" href="assets/news.css">
+<link rel="stylesheet" href="assets/trending.css?v=20261026-ist">
+<link rel="stylesheet" href="assets/fortress.css">
+</head>
+<body>
+<header class="n-top">
+  <div class="n-top-in">
+    <div>
+      <h1>Trending news</h1>
+      <div class="n-sub" id="t-sub">loading…</div>
+    </div>
+    <div class="n-grow"></div>
+    <a class="t-link" href="news.html" title="Maps, alerts, baselines and methodology">Advanced dashboard →</a>
+    <button type="button" id="n-theme" aria-label="Toggle light/dark theme">Theme</button>
+  </div>
+</header>
+
+<main class="n-main t-main">
+  <section class="n-card live" id="t-live" aria-labelledby="t-h-live">
+    <div class="live-head">
+      <h2 id="t-h-live">Live processing</h2>
+      <span id="live-status" class="live-pill" role="status">loading…</span>
+      <span class="n-grow"></span>
+      <span class="n-muted live-asof" id="live-asof"></span>
+    </div>
+    <div class="live-grid" id="live-grid"></div>
+    <div class="live-note" id="live-note" hidden></div>
+  </section>
+
+  <section class="n-card" aria-labelledby="t-h-filter">
+    <h2 id="t-h-filter">What do you want to follow?</h2>
+    <div class="t-filters">
+      <label>Country<select id="t-country" aria-label="Country"></select></label>
+      <label>Domain<select id="t-domain" aria-label="Domain"></select></label>
+      <label>Topic<select id="t-topic" aria-label="Topic" disabled></select></label>
+      <label>Subtopic<select id="t-sub-sel" aria-label="Subtopic" disabled></select></label>
+      <div class="t-field"><span class="t-lab">Period</span>
+        <div class="n-seg" role="group" aria-label="Period" id="t-window"></div></div>
+      <div class="t-custom" id="t-custom" hidden>
+        <label for="t-date-from">From (IST)<input type="date" id="t-date-from" aria-label="Start date (IST)"></label>
+        <label for="t-date-to">To (IST)<input type="date" id="t-date-to" aria-label="End date (IST)"></label>
+        <button type="button" id="t-date-apply">Apply dates</button>
+        <span class="t-date-error" id="t-date-error" role="status" aria-live="polite"></span>
+      </div>
+      <button type="button" id="t-clear" class="t-clear">Clear</button>
+    </div>
+    <div class="t-hint" id="t-hint">Choose a country, a topic, or both. With a country only you get its trending stories across every topic; with a topic only, across every country. Custom dates include both selected dates (IST).</div>
+  </section>
+
+  <section id="t-results" aria-live="polite"></section>
+
+  <section class="n-card" aria-labelledby="t-h-how">
+    <details class="n-det" id="t-how">
+      <summary id="t-h-how">How “trending” is decided</summary>
+      <div id="t-how-body"></div>
+    </details>
+  </section>
+</main>
+
+<div id="n-backdrop"></div>
+<aside id="n-drawer" aria-hidden="true" role="dialog" aria-label="Story details">
+  <div class="n-row"><b id="dr-title" style="font-size:15px"></b><span class="n-grow"></span><button type="button" id="dr-close" aria-label="Close">Close ✕</button></div>
+  <div id="dr-body"></div>
+</aside>
+<script src="assets/trending.js?v=20261026-trending-methodology-v2"></script>
+</body>
+</html>
