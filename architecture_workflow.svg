@@ -34,7 +34,7 @@
   <rect width="2400" height="1500" fill="url(#bg)"/>
   <rect width="2400" height="170" fill="#14233b"/>
   <text x="65" y="78" class="title">NEWS TRENDING &amp; EMERGING EVENTS</text>
-  <text x="68" y="122" class="subtitle">Current architecture · resumable scheduled ingestion · CPU metrics · optional GPU clustering</text>
+  <text x="68" y="122" class="subtitle">Current architecture · read-only sources · resumable scheduled ingestion · News analytics</text>
 
   <!-- Live invariant strip -->
   <rect x="55" y="205" width="2290" height="95" rx="18" fill="#16293b" stroke="#38536f" stroke-width="2"/>
@@ -50,15 +50,15 @@
 
   <rect x="85" y="420" width="410" height="155" rx="16" class="source"/>
   <text x="110" y="460" class="label blue">Source PostgreSQL</text>
-  <text x="110" y="497" class="body">Article labels, IDs and published_at</text>
-  <text x="110" y="530" class="small">Taxonomy, relevance labels and provenance</text>
-  <text x="110" y="555" class="small">SELECT-only service account</text>
+  <text x="110" y="497" class="body">Labels, IDs and publication dates</text>
+  <text x="110" y="530" class="small">Taxonomy and provenance</text>
+  <text x="110" y="555" class="small">SELECT-only access</text>
 
   <rect x="85" y="600" width="410" height="155" rx="16" class="source"/>
   <text x="110" y="640" class="label blue">OpenSearch</text>
-  <text x="110" y="677" class="body">Article text metadata, embeddings and locations</text>
-  <text x="110" y="710" class="small">Search/count/mapping operations only</text>
-  <text x="110" y="735" class="small">Content is not copied into the News database</text>
+  <text x="110" y="677" class="body">Metadata, embeddings and locations</text>
+  <text x="110" y="710" class="small">Read/search operations only</text>
+  <text x="110" y="735" class="small">Article content is not copied locally</text>
 
   <rect x="85" y="780" width="410" height="95" rx="16" class="source"/>
   <text x="110" y="820" class="label blue">No article content copied locally</text>
@@ -71,8 +71,8 @@
 
   <rect x="585" y="445" width="250" height="132" rx="16" class="process"/>
   <text x="610" y="485" class="label green">Discover &amp; hydrate</text>
-  <text x="610" y="520" class="body">Watermark + published-day scan</text>
-  <text x="610" y="550" class="small">Join OpenSearch metadata and labels</text>
+  <text x="610" y="520" class="body">Check watermark and published days</text>
+  <text x="610" y="550" class="small">Join source metadata</text>
   <path d="M835 511 H875" class="lineGreen"/>
 
   <rect x="875" y="445" width="250" height="132" rx="16" class="process"/>
@@ -88,18 +88,14 @@
 
   <rect x="585" y="615" width="810" height="180" rx="16" class="process"/>
   <text x="610" y="655" class="label green">Event clustering</text>
-  <text x="610" y="692" class="body">Article embeddings → cosine-centroid clustering</text>
-  <text x="610" y="725" class="small">Deterministic event IDs · 72-hour stale threshold · online incremental updates</text>
-  <rect x="1230" y="645" width="140" height="58" rx="12" fill="#203b50" stroke="#4b829f"/>
-  <text x="1300" y="680" font-size="18px" font-weight="700" text-anchor="middle">GPU or CPU</text>
+  <text x="610" y="692" class="body">Embeddings grouped into related events</text>
+  <text x="610" y="725" class="small">Stable IDs · incremental event updates</text>
 
   <rect x="585" y="830" width="810" height="210" rx="16" class="process"/>
-  <text x="610" y="870" class="label green">News recomputation</text>
-  <text x="610" y="908" class="body">AOI panels · AOI-day coverage · event metrics</text>
-  <text x="610" y="941" class="body">Trending evidence · emerging events · developments · alerts</text>
-  <text x="610" y="974" class="small">Negative-binomial baselines, NB upper-tail tests, BH-FDR, bursts,</text>
-  <text x="610" y="1002" class="small">AR(1) persistence, publisher diversity and causal acceleration</text>
-  <text x="610" y="1029" class="small gold">Current metric calculations run on CPU</text>
+  <text x="610" y="870" class="label green">Trending analysis</text>
+  <text x="610" y="910" class="body">Compute AOI trends and event signals</text>
+  <text x="610" y="946" class="body">Rank stories and identify emerging events</text>
+  <text x="610" y="982" class="body">Generate alerts and new developments</text>
   <path d="M990 577 V615" class="lineGreen"/>
   <path d="M990 795 V830" class="lineGreen"/>
 
@@ -110,20 +106,20 @@
 
   <rect x="1485" y="445" width="390" height="165" rx="16" class="store"/>
   <text x="1510" y="485" class="label">Ingestion state</text>
-  <text x="1510" y="523" class="body">news_article · news_article_identity</text>
-  <text x="1510" y="556" class="small">checkpoint · run · watermark · service state</text>
-  <text x="1510" y="585" class="small">Processed-day and health records</text>
+  <text x="1510" y="523" class="body">Article facts and source identity</text>
+  <text x="1510" y="556" class="small">Checkpoints · runs · watermarks · state</text>
+  <text x="1510" y="585" class="small">Processed days and service health</text>
 
   <rect x="1910" y="445" width="405" height="165" rx="16" class="store"/>
   <text x="1935" y="485" class="label">Events and clusters</text>
-  <text x="1935" y="523" class="body">event_cluster · event_article</text>
-  <text x="1935" y="556" class="small">Cluster IDs, centroids and article membership</text>
-  <text x="1935" y="585" class="small">Stable across resumable reprocessing</text>
+  <text x="1935" y="523" class="body">Event and article membership</text>
+  <text x="1935" y="556" class="small">Cluster IDs and centroids</text>
+  <text x="1935" y="585" class="small">Stable across resumable runs</text>
 
   <rect x="1485" y="645" width="390" height="165" rx="16" class="store"/>
   <text x="1510" y="685" class="label">AOI analytics</text>
-  <text x="1510" y="723" class="body">aoi · aoi_node_day · node_aoi_day</text>
-  <text x="1510" y="756" class="small">Counts, baselines, trend scores and evidence</text>
+  <text x="1510" y="723" class="body">AOI definitions and daily analytics</text>
+  <text x="1510" y="756" class="small">Counts, trends and statistical evidence</text>
   <text x="1510" y="785" class="small">AOI-day coverage and metric metadata</text>
 
   <rect x="1910" y="645" width="405" height="165" rx="16" class="store"/>
