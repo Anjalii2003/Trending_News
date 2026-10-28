@@ -23,6 +23,12 @@ Resume ingestion with:
 docker compose -f deploy/docker-compose.yml start news-ingest
 ```
 
+## Architecture
+
+![News Trending architecture](architecture_workflow.png)
+
+The editable source is [architecture_workflow.svg](architecture_workflow.svg). It shows the current News-only architecture: read-only article sources, scheduled resumable ingestion, event clustering, `news_engine` derived storage, and the read-only dashboard.
+
 ## Documentation
 
 - [News Engine guide](docs/NEWS_ENGINE.md) — architecture, processing lifecycle, database tables, Trending rules, and operations.

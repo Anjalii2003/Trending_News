@@ -285,6 +285,41 @@
       return Array.isArray(v) ? v.join(', ') : v && typeof v === 'object' ? JSON.stringify(v) : String(v);
     }
     b.appendChild(h('p', { class: 'n-lede' }, 'A displayed story is a group of semantically similar event clusters. The page first applies eligibility and selected filters, then ranks the survivors. The score is relative to the other stories in this exact view; it is not a probability or a judgment of importance.'));
+    var weights = P.trend_weights || {};
+    var exampleRanks = { volume: 0.8, breadth: 0.6, growth: 0.9, recency: 0.5, evidence: 0.75 };
+    var exampleTotal = Object.keys(exampleRanks).reduce(function (sum, key) {
+      return sum + (weights[key] || 0) * exampleRanks[key];
+    }, 0);
+    var exampleWeight = Object.keys(exampleRanks).reduce(function (sum, key) {
+      return sum + (weights[key] || 0);
+    }, 0);
+    b.appendChild(h('div', { class: 't-explain' }, [
+      h('h3', null, 'The simple explanation'),
+      h('p', null, 'We first group similar articles into stories. In the selected time period, a story needs at least ' +
+        val('trend_min_window_articles') + ' unique articles from ' + val('trend_min_window_publishers') +
+        ' different publisher domains to be ranked. Filters are applied before ranking.'),
+      h('p', null, 'Each eligible story is compared with the other eligible stories in the same selected view. Five signals are converted to relative ranks from 0 to 1, then combined:'),
+      h('ul', { class: 't-explain-list' }, [
+        h('li', null, 'How many unique articles it has: ' + (100 * weights.volume) + '%.'),
+        h('li', null, 'How many different publishers covered it: ' + (100 * weights.breadth) + '%.'),
+        h('li', null, 'Whether article volume rose versus the previous equally long period: ' + (100 * weights.growth) + '%.'),
+        h('li', null, 'How recently it was covered: ' + (100 * weights.recency) + '%.'),
+        h('li', null, 'How many available statistical tests flagged it: ' + (100 * weights.evidence) + '%.')
+      ]),
+      h('p', null, 'Final score = 100 × weighted average of those relative ranks. For example, relative ranks of 0.80, 0.60, 0.90, 0.50 and 0.75 give about ' +
+        (exampleWeight ? 100 * exampleTotal / exampleWeight : 0).toFixed(1) + ' / 100 with the current weights. This is a ranking score, not an 80% chance that a story is true.'),
+      h('p', null, 'Growth in everyday terms: compare this period’s article count with the previous period. The calculation is ln((current + 1) / (previous + 1)); positive means rising, zero means roughly unchanged, and negative means falling. It is omitted if the periods are incomplete or have too few articles.'),
+      h('h4', null, 'What “statistical evidence” means'),
+      h('ul', { class: 't-explain-list' }, [
+        h('li', null, 'Topic surge: “Would this many articles be unusual for this topic and place, given its earlier activity?” A negative-binomial model is a way to describe counts that naturally vary from day to day. It learns the expected count and spread from earlier valid days, adjusts for overall article volume and the topic’s trend, then calculates the chance of seeing today’s count or more. If the data do not need the extra variation, the model uses Poisson instead.'),
+        h('li', null, 'Emerging event: “At the same event age, do recent comparable events usually attract this many publishers?” A reference comparison gives a p-value. For example, 2 of 99 reference events at least as broad gives (1 + 2) / (99 + 1) = 0.03 before the multiple-test adjustment.'),
+        h('li', null, 'New development: “Are recent articles about this event less similar to its earlier coverage than the event’s old articles are to each other?” A rank-based test checks the shift, and a coherence check ensures the new articles form a related group.')
+      ]),
+      h('p', { class: 't-note' }, 'A p-value is about how unusual data would be under a comparison model; it is not the chance that the story is true. Because many tests run, Benjamini–Hochberg adjusts them; q < ' +
+        val('fdr_alpha') + ' is the configured flag threshold. A topic surge also needs at least ' + val('alert_min_ratio') +
+        '× its expected count. Statistical evidence is separate from the article-count ranking inputs; the score uses the number of available flagged tests, not the raw p-value.'),
+      h('p', null, 'The “more coverage than X% of comparable stories” line is descriptive context only; it is not a significance test and is not an extra score component. If a signal cannot be tested with enough data or does not apply to the selected place, it is unavailable—not a zero.')
+    ]));
     b.appendChild(h('ul', { class: 't-why' }, [
       h('li', null, 'Volume is the number of unique, non-duplicate articles in the selected period. Breadth is the number of distinct publisher domains in that period.'),
       h('li', null, 'Preset periods are rolling 24 hours, 3 days, or 7 days ending at the latest article time in the loaded data. Custom dates include both selected IST calendar dates; growth compares with the equally long preceding interval.'),
@@ -319,8 +354,8 @@
       '. Unavailable components are omitted from both sums. Stories sort by score, then current-window article count, then story ID. The list shows up to ' +
       val('trend_top_n') + '; “show more” is capped at ' + val('trend_max_n') + '.'));
 
-    section('3. Statistical evidence — tests and alert thresholds',
-      'Benjamini–Hochberg (BH) adjusts p-values for multiple tests. For sorted p-values p(i) among m tests, q(i) = min over j ≥ i of (m × p(j) / j), capped at 1 and made monotonic. q < ' +
+    section('3. Statistical evidence — technical formula and exact thresholds',
+      'A p-value is the probability, under a specific comparison model, of observing a result at least this extreme. Benjamini–Hochberg (BH) adjusts p-values because many tests run together. For sorted p-values p(i) among m tests, q(i) = min over j ≥ i of (m × p(j) / j), capped at 1 and made monotonic. q < ' +
         val('fdr_alpha') + ' is a configured false-discovery-rate threshold, not the probability that a particular story is true or important.',
       ['Signal', 'Test / evidence formula', 'Required support and alert gate'], [
         ['Emerging event', 'Compare distinct publishers k at the event’s age to recent reference clusters: p = (1 + references with ≥ k publishers) / (n_reference + 1). Use same taxonomy domain if it has enough references; otherwise use the AOI pool.', 'Event is ≤ ' + val('emerging_window_hours') + ' hours old; ≥ ' + val('event_min_articles') + ' articles; not D00; high-confidence location (≥ ' + val('loc_high_min_located') + ' located and ≥ ' + (100 * P.loc_high_min_share) + '% agree); reference pool ≥ ' + val('emerging_min_ref') + '; q < ' + val('fdr_alpha') + '; ≥ ' + val('emerging_min_publishers') + ' publishers. High severity: q < ' + val('severity_q_high') + ' and ≥ ' + (2 * P.emerging_min_publishers) + ' publishers.'],

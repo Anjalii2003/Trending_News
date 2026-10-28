@@ -55,6 +55,13 @@
 }
 .t-more { display: block; margin: 14px auto 0; }
 .t-note { border-left: 3px solid var(--gold-hair); padding: 4px 10px; color: var(--ink-2); font-size: 12px; margin: 8px 0; background: var(--sunken); }
+.t-explain { margin: 12px 0; padding: 12px 14px; border: var(--hair) solid var(--gold-hair); border-radius: var(--radius); background: var(--surface); color: var(--ink-2); font-size: 13px; line-height: 1.55; }
+.t-explain h3, .t-explain h4 { margin: 4px 0 8px; color: var(--ink); text-transform: none; letter-spacing: 0; }
+.t-explain h3 { font-size: 16px; }
+.t-explain h4 { font-size: 14px; }
+.t-explain p { margin: 6px 0; }
+.t-explain-list { margin: 6px 0 10px; padding-left: 20px; }
+.t-explain-list li { margin: 3px 0; }
 .t-stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 8px; margin: 10px 0; }
 .t-tag { display: inline-block; font-size: 10.5px; padding: 2px 5px; border: var(--hair) solid var(--gold-hair); border-radius: var(--radius); margin-right: 5px; color: var(--gold); text-transform: uppercase; letter-spacing: .03em; }
 #n-drawer .n-art .t a { overflow-wrap: anywhere; }
